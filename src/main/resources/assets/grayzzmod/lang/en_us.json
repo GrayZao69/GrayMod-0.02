@@ -1,5 +1,8 @@
 {
 
-  "item.grayzzmod.enderita": "Enderita",
-  "item.grayzzmod.raw_enderita": "Raw Enderita"
+  "item.grayzzmod.enderite": "Enderita",
+  "item.grayzzmod.raw_enderite": "Raw Enderita",
+  "block.grayzzmod.enderite_block": "Enderita block",
+  "block.grayzzmod.enderite_ore": "Enderite ore",
+  "block.grayzzmod.raw_enderite_block": "Raw enderite block"
 }

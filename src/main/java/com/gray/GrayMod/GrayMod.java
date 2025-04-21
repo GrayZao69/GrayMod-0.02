@@ -1,7 +1,8 @@
 package com.gray.GrayMod;
 
+import com.gray.block.GrayBlock;
 import com.gray.item.GrayItem;
-import net.minecraft.world.item.CreativeModeTab;
+import com.gray.item.GrayTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import org.slf4j.Logger;
 
@@ -21,34 +22,36 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 
-// The value here should match an entry in the META-INF/neoforge.mods.toml file
+// O valor aqui deve corresponder a uma entrada no arquivo META-INF/neoforge.mods.toml
 @Mod(GrayMod.MOD_ID)
 public class GrayMod
 {
-    // Define mod id in a common place for everything to reference
+    // Defina o mod id em um local comum para que tudo seja referenciado
     public static final String MOD_ID = "grayzzmod";
-    // Directly reference a slf4j logger
+    // Fazer referência direta a um registrador slf4j
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    // The constructor for the mod class is the first code that is run when your mod is loaded.
-    // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
+    // O construtor da classe mod é o primeiro código que é executado quando seu mod é carregado.
+    // O FML reconhecerá alguns tipos de parâmetros como IEventBus ou ModContainer e os passará automaticamente.
     public GrayMod(IEventBus modEventBus, ModContainer modContainer)
     {
-        // Register the commonSetup method for modloading
+        // Registre o metodo commonSetup para modloading
         modEventBus.addListener(this::commonSetup);
 
         GrayItem.register(modEventBus);
+        GrayBlock.register(modEventBus);
+        GrayTab.resgister(modEventBus);
 
 
-        // Register ourselves for server and other game events we are interested in.
-        // Note that this is necessary if and only if we want *this* class (ExampleMod) to respond directly to events.
-        // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
+        // Registrar- se no servidor e em outros eventos do jogo nos quais estamos interessados.
+        // Observe que isso é necessário se e somente se quisermos que *essa* classe (ExampleMod) responda diretamente aos eventos.
+        // Não adicione essa linha se não houver funções anotadas em @SubscribeEvent nessa classe, como onServerStarting() abaixo.
         NeoForge.EVENT_BUS.register(this);
 
-        // Register the item to a creative tab
+        // Registre o item em uma guia criativa
         modEventBus.addListener(this::addCreative);
 
-        // Register our mod's ModConfigSpec so that FML can create and load the config file for us
+        // Registre o ModConfigSpec do nosso mod para que o FML possa criar e carregar o arquivo de configuração para nós
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
 
@@ -56,15 +59,25 @@ public class GrayMod
     {
     }
 
-    // Add the example block item to the building blocks tab
+    // Add items e blocos no inventario do criativo
     private void addCreative(BuildCreativeModeTabContentsEvent event)
     {
         //Items
         if(event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
-            event.accept(GrayItem.ENDERITA);
+            event.accept(GrayItem.ENDERITE);
         }
         if(event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
-            event.accept(GrayItem.RAW_ENDERITA);
+            event.accept(GrayItem.RAW_ENDERITE);
+        }
+        //Blocos
+        if(event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
+            event.accept(GrayBlock.ENDERITE_BLOCK);
+        }
+        if(event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
+            event.accept(GrayBlock.RAW_ENDERITE_BLOCK);
+        }
+        if(event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
+            event.accept(GrayBlock.ENDERITE_ORE);
         }
     }
 
